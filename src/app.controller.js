@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express from "express";
 import { checkConnectionDB } from "./DB/connectionDB.js";
 import userRouter from "./modules/users/user.controller.js";
 
@@ -22,7 +22,7 @@ const bootstrap = () => {
     });
 
     app.use((err, req, res, next) => {
-        const status = err.cause || 500;
+        const status = typeof err.cause === 'number' ? err.cause : 500;
         res.status(status).json({ 
             success: false,
             message: err.message,

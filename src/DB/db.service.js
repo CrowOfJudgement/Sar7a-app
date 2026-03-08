@@ -1,4 +1,4 @@
-import userModel from "../DB/models/user.model.js";
+
 
 export const create=async({model, data,options ={}} ={})=>{
     return await model.create(data);
@@ -19,7 +19,7 @@ export const create=async({model, data,options ={}} ={})=>{
 };
 
  export const find = async ({ model, filter, options = {} } = {}) => {
-    let query = model.findOne(filter); 
+    let query = model.find(filter); 
 
     if (options.populate) {
         query = query.populate(options.populate);
@@ -32,7 +32,7 @@ export const create=async({model, data,options ={}} ={})=>{
 };
 
  export const updateOne = async ({ model, filter={}, update={}, options = {} } = {}) => {
-    let query = model.updateOne(filter, update, {runvalidators:true, ...options}); 
+    let query = model.updateOne(filter, update, {runValidators:true, ...options}); 
 
    
     return await query.exec(); 
@@ -40,7 +40,7 @@ export const create=async({model, data,options ={}} ={})=>{
 
 
  export const findOneAndUpdate = async ({ model, filter={}, update={}, options = {} } = {}) => {
-    let query = model.findOneAndUpdate(filter, update, {new:true, runvalidators:true, ...options}); 
+    let query = model.findOneAndUpdate(filter, update, {new:true, runValidators:true, ...options}); 
 
    
     return await query.exec(); 

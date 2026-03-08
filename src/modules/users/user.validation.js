@@ -7,17 +7,20 @@ export const signUpSchema = {
         email: Joi.string().email().required(),
         password: Joi.string().min(6).required(),
         age: Joi.number().integer().min(0).max(120),
-        gender: Joi.string().valid('male', 'female').required() 
-    }) 
+        gender: Joi.string().valid('male', 'female').required(),
+    })
 };
 
 export const signInSchema = {
     body: Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().min(6).required()
-    }), 
-    query: Joi.object({ 
+    })
+};
+
+export const confirmEmailSchema = {
+    body: Joi.object({
         email: Joi.string().email().required(),
-        password: Joi.string().min(6).required()
-    }) 
+        otp: Joi.string().length(6).required()
+    })
 };
