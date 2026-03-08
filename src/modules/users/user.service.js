@@ -37,7 +37,11 @@ export const signUp = asyncHandler(async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-
+const file_path=[];
+if(req.file){
+for(const file of req.file){
+    file_path.push(file.path);
+}}
     const user = await db_service.create({
         model: userModel,
         data: { 
@@ -46,7 +50,9 @@ export const signUp = asyncHandler(async (req, res, next) => {
             email, 
             password: hashedPassword, 
             age, 
-            gender 
+            gender,
+            profileImage: req.file.attachments[0].path,
+            attachments: file_path
         }
     });
 
