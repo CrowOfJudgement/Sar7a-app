@@ -1,5 +1,6 @@
 import express from "express";
 import { checkConnectionDB } from "./DB/connectionDB.js";
+import { connectRedis } from "./DB/redis/redis.connect.js";
 import userRouter from "./modules/users/user.controller.js";
 
 const app = express();
@@ -8,6 +9,7 @@ const port = 3000;
 const bootstrap = () => {
 
     checkConnectionDB();
+    connectRedis();
     
     app.use(express.json()); 
 

@@ -24,3 +24,38 @@ export const confirmEmailSchema = {
         otp: Joi.string().length(6).required()
     })
 };
+
+export const confirmSignInSchema = confirmEmailSchema;
+
+export const otpOnlySchema = {
+    body: Joi.object({
+        otp: Joi.string().length(6).required()
+    })
+};
+
+export const updatePasswordSchema = {
+    body: Joi.object({
+        currentPassword: Joi.string().min(6).required(),
+        newPassword: Joi.string().min(6).required()
+    })
+};
+
+export const forgetPasswordSchema = {
+    body: Joi.object({
+        email: Joi.string().email().required()
+    })
+};
+
+export const resetPasswordSchema = {
+    body: Joi.object({
+        email: Joi.string().email().required(),
+        otp: Joi.string().length(6).required(),
+        newPassword: Joi.string().min(6).required()
+    })
+};
+
+export const loginWithGmailSchema = {
+    body: Joi.object({
+        idToken: Joi.string().required()
+    })
+};

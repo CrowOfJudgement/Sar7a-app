@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+const otpSchema = new mongoose.Schema({
+    code: {
+        type: String,
+        select: false
+    },
+    expiresAt: Date
+}, {
+    _id: false
+});
+
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -17,7 +27,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true
+        trim: true,
+        lowercase: true
     },
     password: {
         type: String,
@@ -40,13 +51,35 @@ const userSchema = new mongoose.Schema({
     phone: { type: String },
     profilePicture: String,
     confirmed: { type: Boolean, default: false },
-    attachments: [String]
+    attachments: [String],
+    twoFactorEnabled: {
+        type: Boolean,
+        default: false
+    },
+    failedLoginAttempts: {
+        type: Number,
+        default: 0
+    },
+    loginBlockedUntil: Date,
+    changeCredentialTime: Date,
+    confirmationOtp: otpSchema,
+    twoFactorSetupOtp: otpSchema,
+    loginOtp: otpSchema,
+    passwordResetOtp: otpSchema
 }, {
     timestamps: true,
     strict: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
 });
+
+userSchema.index(
+    { createdAt: 1 },
+    {
+        expireAfterSeconds: 86400,
+        partialFilterExpression: { confirmed: false }
+    }
+);
 
 userSchema.virtual("userName").get(function () {
     return this.firstName + " " + this.lastName;
