@@ -27,6 +27,12 @@ export const confirmEmailSchema = {
 
 export const confirmSignInSchema = confirmEmailSchema;
 
+export const emailOnlySchema = {
+    body: Joi.object({
+        email: Joi.string().email().required()
+    })
+};
+
 export const otpOnlySchema = {
     body: Joi.object({
         otp: Joi.string().length(6).required()
@@ -59,3 +65,5 @@ export const loginWithGmailSchema = {
         idToken: Joi.string().required()
     })
 };
+
+export const signUpWithGmailSchema = loginWithGmailSchema;
